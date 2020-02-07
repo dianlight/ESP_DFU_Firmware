@@ -72,7 +72,7 @@ void setup() {
 
       WiFi.mode(WIFI_AP); // drop station mode if LAN/WiFi is down
       WiFi.softAPConfig(local_IP,gateway,subnet);
-      WiFi.softAP(STR(MDNS_NAME) "_AP");
+      WiFi.softAP(MDNS_NAME_STR "_AP");
       WiFi.softAPIP();
     }
   #endif

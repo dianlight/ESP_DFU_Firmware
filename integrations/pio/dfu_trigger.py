@@ -32,8 +32,8 @@ def before_upload(source, target, env):
     print("Size {} is over 50% of the avaliable space. Use DFU Firmware Flags {}.".format(source_s.get_size(),dfu_build_flags))
 
     subprocess.check_call("PLATFORMIO_BUILD_FLAGS='{}' pio run -d {} -t upload --upload-port {}".format(dfu_build_flags,dfu_poject_dir,config.get(build_env,'upload_port')),shell=True)
-    waiting =True
-    wait_time = config.getint(build_env,"custom_dfu_wait_time", fallback= 35)
+#    waiting =True
+    wait_time = config.getint(build_env,"custom_dfu_wait_time", fallback= config.get("esp_dfu","custom_dfu_wait_time",faalback=35))
     ping_host = config.get(build_env,"upload_port")
     print("Wait {} second for ESP Boot on {}".format(wait_time,ping_host))
     time.sleep(wait_time)

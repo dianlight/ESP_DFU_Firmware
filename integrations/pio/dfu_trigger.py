@@ -23,7 +23,7 @@ def before_upload(source, target, env):
     if config.get(build_env,'upload_protocol',fallback="unk") != "espota":
         print("ATTENTION: DFU Firmware work only for espota protocol!")
         return
-    s = " "    
+#    s = " "    
     dfu_poject_dir = config.get(build_env,"custom_dfu_project_dir",fallback=config.get("esp_dfu","custom_dfu_project_dir"))
     dfu_build_flags = config.get(build_env,"custom_dfu_build_flags",fallback=config.get("esp_dfu","custom_dfu_build_flags")).replace('\n',' ')
     if source_s.get_size() < (450 * 1024):
@@ -33,10 +33,10 @@ def before_upload(source, target, env):
 
     subprocess.check_call("PLATFORMIO_BUILD_FLAGS='{}' pio run -d {} -t upload --upload-port {}".format(dfu_build_flags,dfu_poject_dir,config.get(build_env,'upload_port')),shell=True)
 #    waiting =True
-    wait_time = config.getint(build_env,"custom_dfu_wait_time", fallback= config.get("esp_dfu","custom_dfu_wait_time",fallback=35))
+    wait_time = config.getint(build_env,"custom_dfu_wait_time",fallback=config.get("esp_dfu","custom_dfu_wait_time",fallback=35))
     ping_host = config.get(build_env,"upload_port")
     print("Wait {} second for ESP Boot on {}".format(wait_time,ping_host))
-    time.sleep(wait_time)
+    time.sleep(int(wait_time))
 #    while waiting:
 #        counter =0
 #        t = os.system("ping {}".format(ping_host))
